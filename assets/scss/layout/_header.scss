@@ -23,7 +23,10 @@
       background: $secondary-color;
     }
   }
-
+  
+  .clear-placeholder:focus::placeholder {
+    color: transparent !important;
+}
 }
 
 

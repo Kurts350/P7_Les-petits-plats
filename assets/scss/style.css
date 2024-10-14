@@ -23,11 +23,33 @@
 .header__background .btn:hover {
   background: #FFD15B;
 }
+.header__background .clear-placeholder:focus::-moz-placeholder {
+  color: transparent !important;
+}
+.header__background .clear-placeholder:focus::placeholder {
+  color: transparent !important;
+}
+
+.filter {
+  background: #EDEDED;
+}
+.filter .btn {
+  background: white;
+  width: 20%;
+  border-radius: 15px;
+}
+.filter .nombre-recette {
+  width: 20%;
+}
 
 body {
   font-family: "Manrope", sans-serif;
 }
 
 .header__background p {
+  font-family: "Anton", sans-serif;
+}
+
+.filter .nombre-recette {
   font-family: "Anton", sans-serif;
 }/*# sourceMappingURL=style.css.map */
