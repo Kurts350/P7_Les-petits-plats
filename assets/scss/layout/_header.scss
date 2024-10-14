@@ -1,0 +1,29 @@
+// Style header
+.header__background {
+  background-image: url(../img/banner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 66vh;
+
+  .header__background--logo {
+    width: 200px;
+  }
+
+  &--description {
+    color: $secondary-color;
+  }
+  .btn {
+    top: 5px;
+    right: 22px;
+    color: $terciary-color;
+    background: $primary-color;
+    border-radius: 1rem;
+    &:hover {
+      background: $secondary-color;
+    }
+  }
+
+}
+
+

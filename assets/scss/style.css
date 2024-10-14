@@ -1,0 +1,33 @@
+@import "../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+.header__background {
+  background-image: url(../img/banner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 66vh;
+}
+.header__background .header__background--logo {
+  width: 200px;
+}
+.header__background--description {
+  color: #FFD15B;
+}
+.header__background .btn {
+  top: 5px;
+  right: 22px;
+  color: #FFF;
+  background: #1B1B1B;
+  border-radius: 1rem;
+}
+.header__background .btn:hover {
+  background: #FFD15B;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+.header__background p {
+  font-family: "Anton", sans-serif;
+}/*# sourceMappingURL=style.css.map */

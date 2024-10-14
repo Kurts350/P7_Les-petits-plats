@@ -1,0 +1,15 @@
+{
+  "name": "petitsplats2.0",
+  "version": "1.0.0",
+  "description": "P7 JS 2.0 Les petits plats",
+  "main": "recipes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}
