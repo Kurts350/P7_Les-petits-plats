@@ -2,8 +2,28 @@
 $primary-font: 'Anton', sans-serif !default;
 $secondary-font: 'Manrope', sans-serif !default;
 
-// Colors
+// Couleurs
 $primary-color: #1B1B1B !default;
 $secondary-color: #FFD15B !default;
 $terciary-color: #FFF !default;
 $bg-grey: #EDEDED !default;
+
+
+// Boutons
+
+// Enlever l'effet focus des bouttons 
+.btn {
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  &:not(:disabled):not(.disabled):active:focus,
+  &:not(:disabled):not(.disabled).active:focus {
+    box-shadow: none !important;
+  }
+}
+
+$border-radius: 11px;
+

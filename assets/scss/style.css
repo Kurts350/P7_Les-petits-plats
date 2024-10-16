@@ -1,5 +1,13 @@
 @import "../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+.btn:focus, .btn:active {
+  box-shadow: none !important;
+  outline: none !important;
+}
+.btn:not(:disabled):not(.disabled):active:focus, .btn:not(:disabled):not(.disabled).active:focus {
+  box-shadow: none !important;
+}
+
 .header__background {
   background-image: url(../img/banner.png);
   background-size: cover;
@@ -30,16 +38,70 @@
   color: transparent !important;
 }
 
-.filter {
-  background: #EDEDED;
+.filter-section {
+  background-color: #EDEDED;
+  height: 1000px;
 }
-.filter .btn {
-  background: white;
-  width: 20%;
-  border-radius: 15px;
+
+.dropdown .btn-white {
+  text-align: left;
+  background-color: #FFF;
+  border: none;
+  font-weight: bold;
+  color: #1B1B1B;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 11px;
 }
-.filter .nombre-recette {
-  width: 20%;
+.dropdown .btn-white .arrow-up {
+  display: none;
+}
+.dropdown .btn-white::after {
+  display: none;
+}
+.dropdown .dropdown-menu {
+  width: 100%;
+  background-color: #FFF;
+  border: none;
+}
+.dropdown .dropdown-menu ul {
+  overflow-y: auto;
+}
+.dropdown .dropdown-menu ul li {
+  cursor: pointer;
+  color: #1B1B1B;
+}
+.dropdown .dropdown-menu ul li:hover {
+  text-decoration: underline;
+}
+.dropdown.show .btn-white {
+  border-radius: 11px 11px 0 0;
+}
+.dropdown.show .btn-white .arrow-down {
+  display: none;
+}
+.dropdown.show .btn-white .arrow-up {
+  display: inline-block;
+}
+.dropdown.show .dropdown-menu {
+  display: block;
+  border-radius: 0 0 11px 11px;
+}
+.dropdown.show .dropdown-menu .loup {
+  position: absolute;
+  top: 28px;
+  right: 23px;
+  color: #EDEDED;
+}
+
+.filter-container {
+  flex-wrap: nowrap;
+}
+
+.recipe-count {
+  margin-left: auto;
 }
 
 body {

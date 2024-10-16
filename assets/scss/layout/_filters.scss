@@ -1,11 +1,80 @@
-.filter {
-  background: $bg-grey;
-  .btn {
-    background: white;
-    width: 20%;
-    border-radius: 15px;
+.filter-section {
+  background-color: #EDEDED;
+  height: 1000px;
+}
+
+.dropdown {
+  .btn-white {
+    text-align: left;
+    background-color: $terciary-color;
+    border: none;
+    font-weight: bold;
+    color: $primary-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: $border-radius;
+
+    .arrow-up {
+      display: none;
+    }
+
+    &::after {
+      display: none; // Cacher la flèche par défaut de Bootstrap
+    }
   }
-  .nombre-recette {
-    width: 20%;
+
+  .dropdown-menu {
+    width: 100%;
+    background-color: $terciary-color;
+    border: none;
+
+    ul {
+      // max-height: 200px;
+      overflow-y: auto;
+
+      li {
+        cursor: pointer;
+        color: $primary-color;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
+
+  &.show {
+    .btn-white {
+      border-radius: $border-radius $border-radius 0 0;
+
+      .arrow-down {
+        display: none;
+      }
+
+      .arrow-up {
+        display: inline-block;
+      }
+    }
+
+    .dropdown-menu {
+      display: block;
+      border-radius: 0 0 $border-radius $border-radius;
+      .loup {
+        position: absolute;
+        top: 28px;
+        right: 23px;
+        color: #EDEDED;
+      }
+    }
+  }
+}
+
+.filter-container {
+  flex-wrap: nowrap; // Permet aux éléments de passer à la ligne si nécessaire
+}
+
+.recipe-count {
+  margin-left: auto; // Place le compteur de recettes à droite
 }
