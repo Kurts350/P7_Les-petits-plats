@@ -1,6 +1,5 @@
 .filter-section {
-  background-color: #EDEDED;
-  height: 1000px;
+  background-color: $bg-grey;
 }
 
 .dropdown {
@@ -16,12 +15,12 @@
     padding: 15px 20px;
     border-radius: $border-radius;
 
-    .arrow-up {
+    .fa-chevron-up {
       display: none;
     }
 
     &::after {
-      display: none; // Cacher la flèche par défaut de Bootstrap
+      display: none;
     }
   }
 
@@ -29,9 +28,9 @@
     width: 100%;
     background-color: $terciary-color;
     border: none;
+    min-width: 0px;
 
     ul {
-      // max-height: 200px;
       overflow-y: auto;
 
       li {
@@ -49,11 +48,11 @@
     .btn-white {
       border-radius: $border-radius $border-radius 0 0;
 
-      .arrow-down {
+      .fa-chevron-down {
         display: none;
       }
 
-      .arrow-up {
+      .fa-chevron-up {
         display: inline-block;
       }
     }
@@ -72,9 +71,9 @@
 }
 
 .filter-container {
-  flex-wrap: nowrap; // Permet aux éléments de passer à la ligne si nécessaire
+  flex-wrap: nowrap;
 }
 
 .recipe-count {
-  margin-left: auto; // Place le compteur de recettes à droite
+  margin-left: auto;
 }

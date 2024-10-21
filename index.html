@@ -12,7 +12,6 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <script src="https://kit.fontawesome.com/276660d3a9.js" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
@@ -32,69 +31,91 @@
             </form>
         </div>
     </header>
-    <main>
-          <section class="filter-section container-fluid bg-light py-3 py-md-5">
+    <main class="container-fluid px-5">
+        <section class="filter-section py-3 py-md-5">
             <div class="filter-container row justify-content-between align-items-center gy-3">
-              <div class="col-12 col-md-4 col-lg-2">
-                <div class="dropdown w-100">
-                  <button class="btn btn-white dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-target="ingredients">
-                    <span>Ingrédients</span>
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
-                  <div class="dropdown-menu p-3 w-100">
-                    <div class="position-relative">
-                      <input class="form-control mb-2" type="text" placeholder="" aria-label="recherche d'ingrédients">
-                      <i class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y pe-3 loup"></i>
+                <div class="col-12 col-md-4 col-lg-2">
+                    <div class="dropdown w-100">
+                        <button
+                            class="btn btn-white dropdown-toggle w-100 d-flex justify-content-between align-items-center"
+                            type="button" data-target="ingredients">
+                            <span>Ingrédients</span>
+                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <div class="dropdown-menu p-3 w-100">
+                            <div class="position-relative">
+                                <input class="form-control mb-2" type="text" placeholder=""
+                                    aria-label="recherche d'ingrédients">
+                                <i
+                                    class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y pe-3 loup"></i>
+                            </div>
+                            <ul class="list-unstyled mb-0" data-list="ingredientsSelectedList"></ul>
+                            <ul class="list-unstyled mb-0" data-list="ingredientsMainList"></ul>
+                        </div>
                     </div>
-                    <ul class="list-unstyled mb-0" data-list="ingredientsSelectedList"></ul>
-                    <ul class="list-unstyled mb-0" data-list="ingredientsMainList"></ul>
-                  </div>
                 </div>
-              </div>
-              
-              <div class="col-12 col-md-4 col-lg-2">
-                <div class="dropdown w-100">
-                  <button class="btn btn-white dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-target="appareils">
-                    <span>Appareils</span>
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
-                  <div class="dropdown-menu p-3 w-100">
-                    <div class="position-relative">
-                      <input class="form-control mb-2" type="text" placeholder="" aria-label="recherche d'appareils">
-                      <i class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y pe-3 loup"></i>
+
+                <div class="col-12 col-md-4 col-lg-2">
+                    <div class="dropdown w-100">
+                        <button
+                            class="btn btn-white dropdown-toggle w-100 d-flex justify-content-between align-items-center"
+                            type="button" data-target="appareils">
+                            <span>Appareils</span>
+                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <div class="dropdown-menu p-3 w-100">
+                            <div class="position-relative">
+                                <input class="form-control mb-2" type="text" placeholder=""
+                                    aria-label="recherche d'appareils">
+                                <i
+                                    class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y pe-3 loup"></i>
+                            </div>
+                            <ul class="list-unstyled mb-0" data-list="appareilsSelectedList"></ul>
+                            <ul class="list-unstyled mb-0" data-list="appareilsMainList"></ul>
+                        </div>
                     </div>
-                    <ul class="list-unstyled mb-0" data-list="appareilsSelectedList"></ul>
-                    <ul class="list-unstyled mb-0" data-list="appareilsMainList"></ul>
-                  </div>
                 </div>
-              </div>
-              
-              <div class="col-12 col-md-4 col-lg-2">
-                <div class="dropdown w-100">
-                  <button class="btn btn-white dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-target="ustensiles">
-                    <span>Ustensiles</span>
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
-                  <div class="dropdown-menu p-3 w-100">
-                    <div class="position-relative">
-                      <input class="form-control mb-2" type="text" placeholder="" aria-label="recherche d'ustensiles">
-                      <i class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y pe-3 loup"></i>
+
+                <div class="col-12 col-md-4 col-lg-2">
+                    <div class="dropdown w-100">
+                        <button
+                            class="btn btn-white dropdown-toggle w-100 d-flex justify-content-between align-items-center"
+                            type="button" data-target="ustensiles">
+                            <span>Ustensiles</span>
+                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <div class="dropdown-menu p-3 w-100">
+                            <div class="position-relative">
+                                <input class="form-control mb-2" type="text" placeholder=""
+                                    aria-label="recherche d'ustensiles">
+                                <i
+                                    class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y pe-3 loup"></i>
+                            </div>
+                            <ul class="list-unstyled mb-0" data-list="ustensilesSelectedList"></ul>
+                            <ul class="list-unstyled mb-0" data-list="ustensilesMainList"></ul>
+                        </div>
                     </div>
-                    <ul class="list-unstyled mb-0" data-list="ustensilesSelectedList"></ul>
-                    <ul class="list-unstyled mb-0" data-list="ustensilesMainList"></ul>
-                  </div>
                 </div>
-              </div>
-          
-              <div class="col-12 col-lg-3 offset-lg-2 text-center text-lg-end mt-3 mt-lg-0">
-                <p class="recipe-count fw-bold fs-5 mb-0">1500 recettes</p>
-              </div>
+
+                <div class="col-12 col-lg-3 offset-lg-2 text-center text-lg-end mt-3 mt-lg-0">
+                    <p class="recipe-count fw-bold fs-5 mb-0">1500 recettes</p>
+                </div>
             </div>
-          </section>
+        </section>
+        <section>
+            <div id="recipes-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            </div>
+        </section>
     </main>
     <footer>
-        <script src="./script/index.js"></script>
     </footer>
+    <script src="./recipes.js"></script>
+    <script src="./script/template.js"></script>
+    <script src="./script/index.js"></script>
+
 </body>
 
 </html>

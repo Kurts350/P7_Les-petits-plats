@@ -1,0 +1,33 @@
+main{
+  background: $bg-grey;
+}
+.card {
+  background: $bg-grey !important;
+  border: none !important;
+
+}
+
+.card-body {
+  background: $terciary-color;
+  border-radius: 0 0 30px 30px!important;
+
+}
+
+.card-img-top {
+  height: 253px;
+  object-fit: cover;
+  border-radius: 30px 30px 0 0 !important;
+}
+
+.time {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  padding: 10px 20px;
+  background: $secondary-color;
+  border-radius: 20px;
+}
+
+.recipe-ingredients li {
+  margin-bottom: 0.25rem;
+}

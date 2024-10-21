@@ -1,91 +1,84 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//   const toggleButtons = document.querySelectorAll('.toggle-btn');
-
-//   toggleButtons.forEach(button => {
-//       const arrowDown = button.querySelector('.arrow-down');
-//       const arrowUp = button.querySelector('.arrow-up');
-//       const dropdownContent = button.nextElementSibling;
-
-//       // État initial
-//       arrowUp.style.display = 'none';
-//       dropdownContent.style.display = 'none';
-
-//       button.addEventListener('click', function() {
-//           // Fermer tous les autres dropdowns
-//           toggleButtons.forEach(otherButton => {
-//               if (otherButton !== button) {
-//                   const otherArrowDown = otherButton.querySelector('.arrow-down');
-//                   const otherArrowUp = otherButton.querySelector('.arrow-up');
-//                   const otherDropdownContent = otherButton.nextElementSibling;
-                  
-//                   otherArrowDown.style.display = 'inline-block';
-//                   otherArrowUp.style.display = 'none';
-//                   otherDropdownContent.style.display = 'none';
-//               }
-//           });
-
-//           // Basculer la visibilité des flèches et du contenu pour le bouton cliqué
-//           const isHidden = dropdownContent.style.display === 'none';
-          
-//           arrowDown.style.display = isHidden ? 'none' : 'inline-block';
-//           arrowUp.style.display = isHidden ? 'inline-block' : 'none';
-//           dropdownContent.style.display = isHidden ? 'block' : 'none';
-//       });
-//   });
-// });
-
+// Attendre que le DOM soit complètement chargé avant d'exécuter le script
 document.addEventListener('DOMContentLoaded', function() {
+  // Sélectionner tous les éléments avec la classe 'dropdown'
   const dropdowns = document.querySelectorAll('.dropdown');
 
+  // Parcourir tous les dropdowns
   dropdowns.forEach(dropdown => {
+    // Trouver le bouton à l'intérieur de chaque dropdown
     const button = dropdown.querySelector('.btn');
-    const menu = dropdown.querySelector('.dropdown-menu');
-    const arrowDown = button.querySelector('.arrow-down');
-    const arrowUp = button.querySelector('.arrow-up');
 
+    // Ajouter un écouteur d'événement 'click' à chaque bouton
     button.addEventListener('click', function(event) {
+      // Empêcher la propagation de l'événement pour éviter de déclencher l'événement de fermeture global
       event.stopPropagation();
-
-      // Basculer l'état du dropdown actuel
+      // Basculer l'état du dropdown (ouvert/fermé)
       toggleDropdown(dropdown);
     });
   });
 
-  // Fermer les dropdowns lorsqu'on clique en dehors
+  // Ajouter un écouteur d'événement 'click' au document entier
   document.addEventListener('click', function(event) {
+    // Vérifier si le clic n'est pas à l'intérieur d'un dropdown
     if (!event.target.closest('.dropdown')) {
-      dropdowns.forEach(dropdown => {
-        closeDropdown(dropdown);
-      });
+      // Si le clic est en dehors, fermer tous les dropdowns
+      closeAllDropdowns();
     }
   });
 
+  // Fonction pour basculer l'état d'un dropdown
   function toggleDropdown(dropdown) {
+    // Vérifier si le dropdown est actuellement ouvert
     const isOpen = dropdown.classList.contains('show');
-    const button = dropdown.querySelector('.btn');
-    const menu = dropdown.querySelector('.dropdown-menu');
-    const arrowDown = button.querySelector('.arrow-down');
-    const arrowUp = button.querySelector('.arrow-up');
 
     if (isOpen) {
+      // Si ouvert, le fermer
       closeDropdown(dropdown);
     } else {
-      dropdown.classList.add('show');
-      menu.style.display = 'block';
-      arrowDown.style.display = 'none';
-      arrowUp.style.display = 'inline-block';
+      // Si fermé, l'ouvrir
+      openDropdown(dropdown);
     }
   }
 
-  function closeDropdown(dropdown) {
+  // Fonction pour ouvrir un dropdown
+  function openDropdown(dropdown) {
+    // Sélectionner les éléments nécessaires
     const button = dropdown.querySelector('.btn');
     const menu = dropdown.querySelector('.dropdown-menu');
-    const arrowDown = button.querySelector('.arrow-down');
-    const arrowUp = button.querySelector('.arrow-up');
+    const arrowDown = button.querySelector('.fa-chevron-down');
+    const arrowUp = button.querySelector('.fa-chevron-up');
 
+    // Ajouter la classe 'show' pour indiquer que le dropdown est ouvert
+    dropdown.classList.add('show');
+    // Afficher le menu
+    menu.style.display = 'block';
+    // Gérer l'affichage des icônes de flèche
+    if (arrowDown) arrowDown.style.display = 'none';
+    if (arrowUp) arrowUp.style.display = 'inline-block';
+  }
+
+  // Fonction pour fermer un dropdown
+  function closeDropdown(dropdown) {
+    // Sélectionner les éléments nécessaires
+    const button = dropdown.querySelector('.btn');
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const arrowDown = button.querySelector('.fa-chevron-down');
+    const arrowUp = button.querySelector('.fa-chevron-up');
+
+    // Retirer la classe 'show' pour indiquer que le dropdown est fermé
     dropdown.classList.remove('show');
+    // Cacher le menu
     menu.style.display = 'none';
-    arrowDown.style.display = 'inline-block';
-    arrowUp.style.display = 'none';
+    // Gérer l'affichage des icônes de flèche
+    if (arrowDown) arrowDown.style.display = 'inline-block';
+    if (arrowUp) arrowUp.style.display = 'none';
+  }
+
+  // Fonction pour fermer tous les dropdowns
+  function closeAllDropdowns() {
+    // Parcourir tous les dropdowns et les fermer
+    dropdowns.forEach(dropdown => {
+      closeDropdown(dropdown);
+    });
   }
 });

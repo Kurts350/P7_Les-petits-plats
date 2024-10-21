@@ -40,7 +40,6 @@
 
 .filter-section {
   background-color: #EDEDED;
-  height: 1000px;
 }
 
 .dropdown .btn-white {
@@ -55,7 +54,7 @@
   padding: 15px 20px;
   border-radius: 11px;
 }
-.dropdown .btn-white .arrow-up {
+.dropdown .btn-white .fa-chevron-up {
   display: none;
 }
 .dropdown .btn-white::after {
@@ -65,6 +64,7 @@
   width: 100%;
   background-color: #FFF;
   border: none;
+  min-width: 0px;
 }
 .dropdown .dropdown-menu ul {
   overflow-y: auto;
@@ -79,10 +79,10 @@
 .dropdown.show .btn-white {
   border-radius: 11px 11px 0 0;
 }
-.dropdown.show .btn-white .arrow-down {
+.dropdown.show .btn-white .fa-chevron-down {
   display: none;
 }
-.dropdown.show .btn-white .arrow-up {
+.dropdown.show .btn-white .fa-chevron-up {
   display: inline-block;
 }
 .dropdown.show .dropdown-menu {
@@ -104,6 +104,40 @@
   margin-left: auto;
 }
 
+main {
+  background: #EDEDED;
+}
+
+.card {
+  background: #EDEDED !important;
+  border: none !important;
+}
+
+.card-body {
+  background: #FFF;
+  border-radius: 0 0 30px 30px !important;
+}
+
+.card-img-top {
+  height: 253px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 30px 30px 0 0 !important;
+}
+
+.time {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  padding: 10px 20px;
+  background: #FFD15B;
+  border-radius: 20px;
+}
+
+.recipe-ingredients li {
+  margin-bottom: 0.25rem;
+}
+
 body {
   font-family: "Manrope", sans-serif;
 }
@@ -113,5 +147,9 @@ body {
 }
 
 .filter .nombre-recette {
+  font-family: "Anton", sans-serif;
+}
+
+.card-title {
   font-family: "Anton", sans-serif;
 }/*# sourceMappingURL=style.css.map */
