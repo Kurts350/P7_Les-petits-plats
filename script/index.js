@@ -1,84 +1,110 @@
-// Attendre que le DOM soit complètement chargé avant d'exécuter le script
-document.addEventListener('DOMContentLoaded', function() {
-  // Sélectionner tous les éléments avec la classe 'dropdown'
-  const dropdowns = document.querySelectorAll('.dropdown');
+import { createRecipeCard } from './components/template.js';
+import { toggleDropdownDisplay, updateDropdownContent } from './components/dropdown.js';
+import { createFilters, updateFilters, filterRecipes, matchesFilters } from './utils/filterManager.js';
+import { searchRecipes, initializeSearch } from './utils/searchManager.js';
+/**
+ * Met à jour le compteur de recettes
+ * @param {number} count - Nombre de recettes à afficher
+ */
+const updateRecipeCount = count => {
+  const recipeCountElement = document.querySelector(".recipe-count");
+  if (recipeCountElement) {
+    recipeCountElement.textContent = `${count} recettes`;
+  }
+};
 
-  // Parcourir tous les dropdowns
-  dropdowns.forEach(dropdown => {
-    // Trouver le bouton à l'intérieur de chaque dropdown
-    const button = dropdown.querySelector('.btn');
+/**
+ * Met à jour l'affichage des recettes
+ * @param {Array} recipes - Les recettes à afficher
+ * @param {HTMLElement} container - Le conteneur
+ */
+const updateDisplay = (recipes, container) => {
+  container.innerHTML = "";
+  recipes
+    .map(createRecipeCard)
+    .forEach(card => container.appendChild(card));
+  
+  updateRecipeCount(recipes.length);
+};
 
-    // Ajouter un écouteur d'événement 'click' à chaque bouton
-    button.addEventListener('click', function(event) {
-      // Empêcher la propagation de l'événement pour éviter de déclencher l'événement de fermeture global
-      event.stopPropagation();
-      // Basculer l'état du dropdown (ouvert/fermé)
-      toggleDropdown(dropdown);
+/**
+ * Point d'entrée principal
+ */
+const initialize = () => {
+  const recipesContainer = document.getElementById("recipes-container");
+  if (!recipesContainer) {
+    console.error("L'élément 'recipes-container' n'a pas été trouvé dans le DOM.");
+    return;
+  }
+
+  // Récupération des éléments dropdown
+  const dropdownElements = {
+    ingredients: document.querySelector('[data-target="ingredients"]')?.closest('.dropdown'),
+    appareils: document.querySelector('[data-target="appareils"]')?.closest('.dropdown'),
+    ustensiles: document.querySelector('[data-target="ustensiles"]')?.closest('.dropdown')
+  };
+
+  let currentFilters = createFilters();
+  let currentSearchTerm = '';
+  
+  // Gestionnaire unifié pour la recherche et les filtres
+  const handleSearchAndFilter = () => {
+    const filteredRecipes = searchRecipes(recipes, currentSearchTerm, currentFilters, matchesFilters);
+    updateDisplay(filteredRecipes, recipesContainer);
+    
+    // Mise à jour des dropdowns avec les options disponibles
+    Object.entries(dropdownElements).forEach(([type, dropdown]) => {
+      if (dropdown) {
+        updateDropdownContent(dropdown, filteredRecipes, type, handleFilterChange, currentFilters);
+      }
     });
-  });
+  };
 
-  // Ajouter un écouteur d'événement 'click' au document entier
-  document.addEventListener('click', function(event) {
-    // Vérifier si le clic n'est pas à l'intérieur d'un dropdown
-    if (!event.target.closest('.dropdown')) {
-      // Si le clic est en dehors, fermer tous les dropdowns
-      closeAllDropdowns();
+  // Gestionnaire de recherche
+  const handleSearch = (searchTerm) => {
+    currentSearchTerm = searchTerm;
+    handleSearchAndFilter();
+  };
+
+  // Gestionnaire de changement de filtres
+  const handleFilterChange = (newFilters) => {
+    currentFilters = newFilters;
+    handleSearchAndFilter();
+  };
+
+  // Initialisation de la recherche avec l'input du header
+  initializeSearch(handleSearch);
+
+  // Configuration initiale des dropdowns
+  if (Array.isArray(recipes)) {
+    // Remplissage initial des dropdowns
+    Object.entries(dropdownElements).forEach(([type, dropdown]) => {
+      if (dropdown) {
+        updateDropdownContent(dropdown, recipes, type, handleFilterChange, currentFilters);
+      }
+    });
+
+    // Affichage initial des recettes
+    updateDisplay(recipes, recipesContainer);
+  } else {
+    console.error("La variable recipes n'est pas définie ou n'est pas un tableau");
+    return;
+  }
+
+  // Gestion des événements des dropdowns
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+    const button = dropdown.querySelector('.btn');
+    if (button) {
+      button.addEventListener('click', event => {
+        event.stopPropagation();
+        const isOpen = dropdown.classList.contains('show');
+        toggleDropdownDisplay(dropdown, !isOpen);
+      });
     }
   });
+};
 
-  // Fonction pour basculer l'état d'un dropdown
-  function toggleDropdown(dropdown) {
-    // Vérifier si le dropdown est actuellement ouvert
-    const isOpen = dropdown.classList.contains('show');
+// Démarrage de l'application
+document.addEventListener('DOMContentLoaded', initialize);
 
-    if (isOpen) {
-      // Si ouvert, le fermer
-      closeDropdown(dropdown);
-    } else {
-      // Si fermé, l'ouvrir
-      openDropdown(dropdown);
-    }
-  }
-
-  // Fonction pour ouvrir un dropdown
-  function openDropdown(dropdown) {
-    // Sélectionner les éléments nécessaires
-    const button = dropdown.querySelector('.btn');
-    const menu = dropdown.querySelector('.dropdown-menu');
-    const arrowDown = button.querySelector('.fa-chevron-down');
-    const arrowUp = button.querySelector('.fa-chevron-up');
-
-    // Ajouter la classe 'show' pour indiquer que le dropdown est ouvert
-    dropdown.classList.add('show');
-    // Afficher le menu
-    menu.style.display = 'block';
-    // Gérer l'affichage des icônes de flèche
-    if (arrowDown) arrowDown.style.display = 'none';
-    if (arrowUp) arrowUp.style.display = 'inline-block';
-  }
-
-  // Fonction pour fermer un dropdown
-  function closeDropdown(dropdown) {
-    // Sélectionner les éléments nécessaires
-    const button = dropdown.querySelector('.btn');
-    const menu = dropdown.querySelector('.dropdown-menu');
-    const arrowDown = button.querySelector('.fa-chevron-down');
-    const arrowUp = button.querySelector('.fa-chevron-up');
-
-    // Retirer la classe 'show' pour indiquer que le dropdown est fermé
-    dropdown.classList.remove('show');
-    // Cacher le menu
-    menu.style.display = 'none';
-    // Gérer l'affichage des icônes de flèche
-    if (arrowDown) arrowDown.style.display = 'inline-block';
-    if (arrowUp) arrowUp.style.display = 'none';
-  }
-
-  // Fonction pour fermer tous les dropdowns
-  function closeAllDropdowns() {
-    // Parcourir tous les dropdowns et les fermer
-    dropdowns.forEach(dropdown => {
-      closeDropdown(dropdown);
-    });
-  }
-});
+export { updateRecipeCount, updateDisplay };

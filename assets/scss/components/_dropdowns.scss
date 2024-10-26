@@ -1,0 +1,58 @@
+/* Styles des dropdowns */
+.dropdown-menu {
+  min-width: 200px;
+  padding: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: $secondary-color !important;
+  text-decoration: none !important;
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem 0;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.selected-item:hover {
+  background-color: #e9ecef;
+}
+
+/* Style spécifique pour la liste déroulante */
+.dropdown-scroll {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Assurer que les items ont une hauteur uniforme */
+.dropdown-scroll .dropdown-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-tags-container {
+  button {
+    background: $secondary-color;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+  }
+}
+

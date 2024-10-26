@@ -1,8 +1,9 @@
-@import "../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
-.btn:focus, .btn:active {
+.btn:focus, .btn:active, .btn:hover {
   box-shadow: none !important;
   outline: none !important;
+  background: white !important;
 }
 .btn:not(:disabled):not(.disabled):active:focus, .btn:not(:disabled):not(.disabled).active:focus {
   box-shadow: none !important;
@@ -102,6 +103,62 @@
 
 .recipe-count {
   margin-left: auto;
+}
+
+/* Styles des dropdowns */
+.dropdown-menu {
+  min-width: 200px;
+  padding: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #FFD15B !important;
+  text-decoration: none !important;
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem 0;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.selected-item:hover {
+  background-color: #e9ecef;
+}
+
+/* Style spécifique pour la liste déroulante */
+.dropdown-scroll {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Assurer que les items ont une hauteur uniforme */
+.dropdown-scroll .dropdown-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-tags-container button {
+  background: #FFD15B;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
 }
 
 main {

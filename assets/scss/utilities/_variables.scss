@@ -14,9 +14,11 @@ $bg-grey: #EDEDED !default;
 // Enlever l'effet focus des bouttons 
 .btn {
   &:focus,
-  &:active {
+  &:active,
+  &:hover {
     box-shadow: none !important;
     outline: none !important;
+    background: white !important;
   }
 
   &:not(:disabled):not(.disabled):active:focus,
