@@ -4,37 +4,89 @@
  * @param {string} key - La propriété à extraire
  * @returns {Array} Liste unique d'éléments
  */
-const getUniqueItems = (recipes, key) => 
-  Array.from(new Set(
-    recipes.flatMap(recipe => 
-      Array.isArray(recipe[key])
-        ? recipe[key].map(item => 
-            typeof item === 'object' ? item.ingredient : item
-          )
-        : [recipe[key]]
-    )
-  ));
+const getUniqueItems = (recipes, key) => {
+  const items = [];
+  const uniqueSet = new Set();
+
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+    if (Array.isArray(recipe[key])) {
+      for (let j = 0; j < recipe[key].length; j++) {
+        const item = recipe[key][j];
+        const value = typeof item === 'object' ? item.ingredient : item;
+        uniqueSet.add(value);
+      }
+    } else {
+      uniqueSet.add(recipe[key]);
+    }
+  }
+
+  for (const item of uniqueSet) {
+    items.push(item);
+  }
+
+  return items;
+};
 
 // Vérifie si une chaîne contient un terme de recherche
-const containsSearchTerm = (str, searchTerm) =>
-  str.toLowerCase().includes(searchTerm.toLowerCase());
+const containsSearchTerm = (str, searchTerm) => {
+  const normalizedStr = str.toLowerCase();
+  const normalizedTerm = searchTerm.toLowerCase();
+  return normalizedStr.indexOf(normalizedTerm) !== -1;
+};
 
 // Vérifie si un ingrédient correspond au terme de recherche
-const matchIngredient = (ingredient, searchTerm) =>
-  containsSearchTerm(ingredient.ingredient, searchTerm);
+const matchIngredient = (ingredient, searchTerm) => {
+  return containsSearchTerm(ingredient.ingredient, searchTerm);
+};
 
 // Vérifie si une recette correspond aux critères de recherche
 const matchesSearchCriteria = (recipe, searchTerm) => {
   if (!searchTerm || searchTerm.length < 3) return true;
   
-  return (
-    // Recherche dans le nom
-    containsSearchTerm(recipe.name, searchTerm) ||
-    // Recherche dans la description
-    containsSearchTerm(recipe.description, searchTerm) ||
-    // Recherche dans les ingrédients
-    recipe.ingredients.some(ingredient => matchIngredient(ingredient, searchTerm))
-  );
+  // Recherche dans le nom
+  if (containsSearchTerm(recipe.name, searchTerm)) return true;
+  
+  // Recherche dans la description
+  if (containsSearchTerm(recipe.description, searchTerm)) return true;
+  
+  // Recherche dans les ingrédients
+  for (let i = 0; i < recipe.ingredients.length; i++) {
+    if (matchIngredient(recipe.ingredients[i], searchTerm)) {
+      return true;
+    }
+  }
+  
+  return false;
+};
+
+// Gère l'affichage du message "Aucune recette"
+const toggleNoRecipeMessage = (searchTerm, hasResults) => {
+  const existingMessage = document.querySelector('.no-recipe-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+
+  const recipesContainer = document.getElementById('recipes-container');
+  if (!recipesContainer) return;
+
+  if (hasResults || !searchTerm || searchTerm.length < 3) {
+    recipesContainer.style.display = '';
+    return;
+  }
+
+  recipesContainer.style.display = 'none';
+
+  const messageElement = document.createElement('div');
+  messageElement.className = 'no-recipe-message text-center my-5';
+  messageElement.innerHTML = `
+    <p class="fs-4 fw-light">
+      Aucune recette ne contient '${searchTerm}' <br>
+      Vous pouvez chercher « tarte aux pommes », « poisson », etc.
+    </p>
+  `;
+
+  recipesContainer.insertAdjacentElement('afterend', messageElement);
 };
 
 /**
@@ -46,48 +98,57 @@ const matchesSearchCriteria = (recipe, searchTerm) => {
  * @returns {Array} Recettes filtrées
  */
 const searchRecipes = (recipes, searchTerm, activeFilters, matchesFilters) => {
-  return recipes
-    .filter(recipe => matchesSearchCriteria(recipe, searchTerm))
-    .filter(recipe => matchesFilters(activeFilters, recipe));
+  const filteredRecipes = [];
+  
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+    if (matchesSearchCriteria(recipe, searchTerm) && matchesFilters(activeFilters, recipe)) {
+      filteredRecipes.push(recipe);
+    }
+  }
+  
+  toggleNoRecipeMessage(searchTerm, filteredRecipes.length > 0);
+  
+  return filteredRecipes;
 };
 
 // Utilitaire debounce pour limiter les appels de recherche
 const debounce = (func, wait) => {
   let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
+  return function(...args) {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(function() {
+      func.apply(this, args);
+    }, wait);
   };
 };
 
 /**
  * Initialise la recherche sur la barre de recherche du header
  * @param {Function} handleSearch - Fonction de callback pour la recherche
- * @param {Function} updateUI - Fonction de mise à jour de l'interface
  */
 const initializeSearch = (handleSearch) => {
   const searchForm = document.querySelector('.header__background--searchbar');
-  const searchInput = searchForm?.querySelector('input[name="searchbar"]');
+  const searchInput = searchForm ? searchForm.querySelector('input[name="searchbar"]') : null;
 
   if (!searchForm || !searchInput) {
     console.error("Les éléments de recherche n'ont pas été trouvés");
     return;
   }
 
-  // Gestion du debounce sur l'input
-  const debouncedSearch = debounce((value) => {
+  const debouncedSearch = debounce(function(value) {
     if (!value || value.length >= 3) {
       handleSearch(value);
     }
   }, 300);
 
-  // Écouteur d'événement sur l'input
-  searchInput.addEventListener('input', (e) => {
+  searchInput.addEventListener('input', function(e) {
     debouncedSearch(e.target.value);
   });
 
-  // Empêcher la soumission du formulaire
-  searchForm.addEventListener('submit', (e) => {
+  searchForm.addEventListener('submit', function(e) {
     e.preventDefault();
     handleSearch(searchInput.value);
   });
