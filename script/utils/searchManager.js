@@ -37,6 +37,41 @@ const matchesSearchCriteria = (recipe, searchTerm) => {
   );
 };
 
+// Gère l'affichage du message "Aucune recette"
+const toggleNoRecipeMessage = (searchTerm, hasResults) => {
+  // Supprime l'ancien message s'il existe
+  const existingMessage = document.querySelector('.no-recipe-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+
+  // Récupère le conteneur de recettes
+  const recipesContainer = document.getElementById('recipes-container');
+  if (!recipesContainer) return;
+
+  // Si on a des résultats ou pas de terme de recherche, on s'assure que le conteneur est visible
+  if (hasResults || !searchTerm || searchTerm.length < 3) {
+    recipesContainer.style.display = '';
+    return;
+  }
+
+  // Cache le conteneur de recettes
+  recipesContainer.style.display = 'none';
+
+  // Crée et affiche le message
+  const messageElement = document.createElement('div');
+  messageElement.className = 'no-recipe-message text-center my-5';
+  messageElement.innerHTML = `
+    <p class="fs-4 fw-light">
+      Aucune recette ne contient '${searchTerm}' <br>
+      Vous pouvez chercher « tarte aux pommes », « poisson », etc.
+    </p>
+  `;
+
+  // Insère le message après le conteneur de recettes
+  recipesContainer.insertAdjacentElement('afterend', messageElement);
+};
+
 /**
  * Filtre les recettes selon le terme de recherche et les filtres actifs
  * @param {Array} recipes - Toutes les recettes
@@ -46,9 +81,14 @@ const matchesSearchCriteria = (recipe, searchTerm) => {
  * @returns {Array} Recettes filtrées
  */
 const searchRecipes = (recipes, searchTerm, activeFilters, matchesFilters) => {
-  return recipes
+  const filteredRecipes = recipes
     .filter(recipe => matchesSearchCriteria(recipe, searchTerm))
     .filter(recipe => matchesFilters(activeFilters, recipe));
+    
+  // Affiche ou masque le message "Aucune recette"
+  toggleNoRecipeMessage(searchTerm, filteredRecipes.length > 0);
+  
+  return filteredRecipes;
 };
 
 // Utilitaire debounce pour limiter les appels de recherche
