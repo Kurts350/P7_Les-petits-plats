@@ -1,6 +1,6 @@
 import { createRecipeCard } from './components/template.js';
 import { toggleDropdownDisplay, updateDropdownContent } from './components/dropdown.js';
-import { createFilters, updateFilters, filterRecipes, matchesFilters } from './utils/filterManager.js';
+import { createFilters, matchesFilters } from './utils/filterManager.js';
 import { searchRecipes, initializeSearch } from './utils/searchManager.js';
 /**
  * Met à jour le compteur de recettes
@@ -39,11 +39,10 @@ const initialize = () => {
 
   // Récupération des éléments dropdown
   const dropdownElements = {
-    ingredients: document.querySelector('[data-target="ingredients"]')?.closest('.dropdown'),
-    appareils: document.querySelector('[data-target="appareils"]')?.closest('.dropdown'),
-    ustensiles: document.querySelector('[data-target="ustensiles"]')?.closest('.dropdown')
+    ingredients: document.querySelector('[data-target="ingredients"]').closest('.dropdown'),
+    appareils: document.querySelector('[data-target="appareils"]').closest('.dropdown'),
+    ustensiles: document.querySelector('[data-target="ustensiles"]').closest('.dropdown')
   };
-
   let currentFilters = createFilters();
   let currentSearchTerm = '';
   
